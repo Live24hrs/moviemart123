@@ -7,6 +7,7 @@ export type Movie = {
   id: string
   title: string
   year?: string
+  releaseDate?: string
   description?: string
   artwork?: string
   rating?: number

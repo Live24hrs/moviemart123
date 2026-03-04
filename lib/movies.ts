@@ -116,18 +116,7 @@ export async function getMovieByIdSmart(idRaw: string): Promise<{ movie: Movie; 
       const w = await fetchWikipediaSummaryByTitle(movie.title).catch(() => null)
       if (w?.description) brief = w.description
     }
-    return { movie, brief, link: movie.storeUrl }
-  }
-  releaseDate?: string
-  export type Movie = {
-  id: string
-  title: string
-  year?: string
-  releaseDate?: string   // ✅ ADD THIS
-  runtimeMinutes?: number
-  poster?: string
-  overview?: string
-}
+
 
   // D) Non-numeric slug -> Wikipedia title
   const wiki = await fetchWikipediaSummaryByTitle(decodeURIComponent(id)).catch(() => null)

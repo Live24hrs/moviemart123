@@ -27,18 +27,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">{children}</main>
         <Footer />
         <ChatWidget />
-        <script
-  dangerouslySetInnerHTML={{
-    __html: `
-      (function () {
-        var s = document.createElement('script');
-        s.src = 'https://pl28844493.effectivegatecpm.com/f5/94/64/f594644711285eccc310caa181b34543.js';
-        s.async = true;
-        document.body.appendChild(s);
-      })();
-    `,
-  }}
-/>
       </body>
     </html>
   )

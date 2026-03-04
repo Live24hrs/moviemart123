@@ -27,6 +27,7 @@ export type Movie = {
   votes?: number
   imdbRating?: number
   imdbVotes?: number
+  averageUserRating?: number
 
   // classification
   genres?: string[]

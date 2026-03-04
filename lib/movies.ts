@@ -1,5 +1,11 @@
 import type { Movie } from './apple'
-import { searchUnified, lookupMovieMultiStore, fromITunes, fetchWikipediaSummaryByTitle, fetchWikipediaMovie } from './apple'
+import {
+  searchUnified,
+  lookupMovieMultiStore,
+  fromITunes,
+  fetchWikipediaSummaryByTitle,
+  fetchWikipediaMovie,
+} from './apple'
 import { tmdbSearchMovies, tmdbPopular, tmdbMovieDetails } from './tmdb'
 
 // Simple in-memory cache (dev + single server). For Vercel multi-region you’d use Redis.
@@ -38,6 +44,7 @@ function isNumericId(id: string) {
 export async function getFeaturedMovies(): Promise<Movie[]> {
   const cached = getCache<Movie[]>('featured')
   if (cached) return cached
+
   // Try TMDB first (fast + best coverage). If network blocks/timeout, fallback to iTunes/Wikipedia.
   const tmdb = await tmdbPopular(50).catch(() => null)
   if (tmdb && tmdb.length) {
@@ -54,6 +61,7 @@ export async function getFeaturedMovies(): Promise<Movie[]> {
       return items
     }
   }
+
   return []
 }
 
@@ -78,14 +86,17 @@ export async function searchMoviesSmart(query: string): Promise<Movie[]> {
   return fb
 }
 
-export async function getMovieByIdSmart(idRaw: string): Promise<{ movie: Movie; brief?: string; link?: string } | null> {
+export async function getMovieByIdSmart(
+  idRaw: string
+): Promise<{ movie: Movie; brief?: string; link?: string } | null> {
   const id = String(idRaw || '').trim()
   if (!id) return null
 
   // A) Wikipedia routes
   if (id.startsWith('wiki_')) {
     const wikiMovie = await fetchWikipediaMovie(id).catch(() => null)
-    const movie = wikiMovie || { id, title: decodeURIComponent(id.slice(5)), source: 'wikipedia' as const }
+    const movie =
+      wikiMovie || { id, title: decodeURIComponent(id.slice(5)), source: 'wikipedia' as const }
     return { movie, brief: movie.description, link: movie.wikiUrl }
   }
 
@@ -109,7 +120,7 @@ export async function getMovieByIdSmart(idRaw: string): Promise<{ movie: Movie; 
   if (isNumericId(id)) {
     const data = await lookupMovieMultiStore(id).catch(() => null)
     const raw = data?.results?.[0]
-    const movie = raw ? fromITunes(raw) : { id, title: 'Movie' }
+    const movie = raw ? fromITunes(raw) : ({ id, title: 'Movie' } as Movie)
 
     let brief = movie.description
     if (!brief || String(brief).replace(/<[^>]*>/g, '').trim().length < 80) {
@@ -117,9 +128,12 @@ export async function getMovieByIdSmart(idRaw: string): Promise<{ movie: Movie; 
       if (w?.description) brief = w.description
     }
 
+    return { movie, brief, link: movie.storeUrl }
+  }
 
   // D) Non-numeric slug -> Wikipedia title
   const wiki = await fetchWikipediaSummaryByTitle(decodeURIComponent(id)).catch(() => null)
-  const movie = wiki || { id: `wiki_${encodeURIComponent(id)}`, title: decodeURIComponent(id), source: 'wikipedia' as const }
+  const movie =
+    wiki || { id: `wiki_${encodeURIComponent(id)}`, title: decodeURIComponent(id), source: 'wikipedia' as const }
   return { movie, brief: movie.description, link: movie.wikiUrl }
 }

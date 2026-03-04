@@ -6,8 +6,6 @@ export type MovieSource = 'itunes' | 'wikipedia' | 'tmdb'
 export type Movie = {
   id: string
   title: string
-
-  // common fields used across the app
   year?: string
   releaseDate?: string
 
@@ -30,26 +28,17 @@ export type Movie = {
   imdbRating?: number
   imdbVotes?: number
 
-  creator?: string // ✅ for your MovieCard.tsx
+  creator?: string
 
   source?: MovieSource
-
-  // iTunes / store links
   storeUrl?: string
-
-  // Wikipedia fields
   wikiTitle?: string
   wikiUrl?: string
 
-  // optional extras
   language?: string
   country?: string
   popularity?: number
 
-  /**
-   * ✅ IMPORTANT: allows extra fields without failing builds
-   * because your UI may reference fields from different sources.
-   */
   [key: string]: any
 }
 

@@ -7,46 +7,50 @@ export type Movie = {
   id: string
   title: string
 
-  // basic info
+  // common fields used across the app
   year?: string
   releaseDate?: string
+
   runtime?: number
   runtimeMinutes?: number
 
-  // description
   description?: string
   overview?: string
 
-  // media
   poster?: string
   artwork?: string
   backdrop?: string
 
-  // ratings
-  rating?: number
-  votes?: number
-  imdbRating?: number
-  imdbVotes?: number
-  averageUserRating?: number
-
-  // classification
   genres?: string[]
   contentRating?: string
 
-  // source
+  rating?: number
+  votes?: number
+  averageUserRating?: number
+  imdbRating?: number
+  imdbVotes?: number
+
+  creator?: string // ✅ for your MovieCard.tsx
+
   source?: MovieSource
 
-  // store links
+  // iTunes / store links
   storeUrl?: string
 
-  // wikipedia
+  // Wikipedia fields
   wikiTitle?: string
   wikiUrl?: string
 
-  // misc fields some APIs return
+  // optional extras
   language?: string
   country?: string
   popularity?: number
+
+  /**
+   * ✅ IMPORTANT: allows extra fields without failing builds
+   * because your UI may reference fields from different sources.
+   */
+  [key: string]: any
 }
 
 const ITUNES_SEARCH = 'https://itunes.apple.com/search'

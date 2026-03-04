@@ -6,20 +6,46 @@ export type MovieSource = 'itunes' | 'wikipedia' | 'tmdb'
 export type Movie = {
   id: string
   title: string
+
+  // basic info
   year?: string
   releaseDate?: string
+  runtime?: number
+  runtimeMinutes?: number
+
+  // description
   description?: string
+  overview?: string
+
+  // media
+  poster?: string
   artwork?: string
+  backdrop?: string
+
+  // ratings
   rating?: number
   votes?: number
+  imdbRating?: number
+  imdbVotes?: number
+
+  // classification
   genres?: string[]
-  runtime?: number
+  contentRating?: string
+
+  // source
   source?: MovieSource
-  // iTunes fields
+
+  // store links
   storeUrl?: string
-  // Wikipedia fields
+
+  // wikipedia
   wikiTitle?: string
   wikiUrl?: string
+
+  // misc fields some APIs return
+  language?: string
+  country?: string
+  popularity?: number
 }
 
 const ITUNES_SEARCH = 'https://itunes.apple.com/search'

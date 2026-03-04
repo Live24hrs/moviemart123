@@ -23,7 +23,7 @@ export default async function Home() {
         <AdBanner />
       </div>
 
-      <AdShowcase />
+      {/* <AdShowcase /> */}
 
       {/* ✅ Another ad near bottom (optional) */}
       <div className="flex justify-center">

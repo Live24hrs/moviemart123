@@ -1,18 +1,35 @@
-import { getFeaturedMovies } from '@/lib/movies'
-import Hero from '@/components/Hero'
-import MovieRail from '@/components/MovieRail'
-import AdShowcase from '@/components/AdShowcase'
+import { getFeaturedMovies } from "@/lib/movies";
+import Hero from "@/components/Hero";
+import MovieRail from "@/components/MovieRail";
+import AdShowcase from "@/components/AdShowcase";
 import AdBanner from "@/components/AdBanner";
 
 export default async function Home() {
-  // Prefer TMDB (fast + global). If TMDB times out/blocked, falls back to iTunes/Wikipedia.
-  const items = await getFeaturedMovies()
+  const items = await getFeaturedMovies();
 
   return (
     <div className="space-y-10">
       <Hero />
+
+      {/* ✅ Ad under Hero */}
+      <div className="flex justify-center">
+        <AdBanner />
+      </div>
+
       <MovieRail title="Featured Movies" movies={items} />
+
+      {/* ✅ Ad between sections */}
+      <div className="flex justify-center">
+        <AdBanner />
+      </div>
+
       <AdShowcase />
+
+      {/* ✅ Another ad near bottom (optional) */}
+      <div className="flex justify-center">
+        <AdBanner />
+      </div>
+
       <div className="card p-6">
         <h3 className="text-lg font-semibold">How buying works</h3>
         <p className="mt-2 text-slate-600">
@@ -21,5 +38,5 @@ export default async function Home() {
         </p>
       </div>
     </div>
-  )
+  );
 }

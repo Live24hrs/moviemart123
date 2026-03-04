@@ -2,6 +2,7 @@ import { getFeaturedMovies } from '@/lib/movies'
 import Hero from '@/components/Hero'
 import MovieRail from '@/components/MovieRail'
 import AdShowcase from '@/components/AdShowcase'
+import AdBanner from "@/components/AdBanner";
 
 export default async function Home() {
   // Prefer TMDB (fast + global). If TMDB times out/blocked, falls back to iTunes/Wikipedia.

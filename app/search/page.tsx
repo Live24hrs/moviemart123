@@ -1,6 +1,8 @@
 import { searchMoviesSmart } from '@/lib/movies'
 import SearchBar from '@/components/SearchBar'
 import MovieGrid from '@/components/MovieGrid'
+import AdBanner from '@/components/AdBanner'
+import NativeBanner from '@/components/ads/NativeBanner'
 
 export default async function SearchPage({
   searchParams,
@@ -30,8 +32,20 @@ export default async function SearchPage({
         </p>
       )}
 
+      {/* Force-refresh ad when query changes (client-side navigation) */}
+      {q && (
+        <div className="flex justify-center">
+          <AdBanner key={`search-320x50-${q}`} />
+        </div>
+      )}
+
       {movies.length ? (
-        <MovieGrid movies={movies} />
+        <div className="space-y-8">
+          <MovieGrid movies={movies} />
+
+          {/* Native fill after results */}
+          <NativeBanner key={`search-native-${q}`} />
+        </div>
       ) : (
         q ? (
           <div className="card p-10 text-center text-slate-600">

@@ -3,12 +3,12 @@
 import { Instagram, Copy } from 'lucide-react'
 import { useMemo, useState } from 'react'
 
-export default function InstagramCTA({ movieTitle, plan, price }: { movieTitle: string; plan: string; price: number }) {
+export default function InstagramCTA({ movieTitle }: { movieTitle: string }) {
   const handle = process.env.NEXT_PUBLIC_INSTAGRAM_HANDLE || 'your_handle'
   const profile = `https://www.instagram.com/${handle}/`
   const msg = useMemo(() => {
-    return `Hi, I want "${movieTitle}" on ${plan} plan. Final offer: ₹${price}. Please confirm steps.`
-  }, [movieTitle, plan, price])
+    return `Hi, I want "${movieTitle}". Please send me the FREE access/details and next steps.`
+  }, [movieTitle])
 
   const [copied, setCopied] = useState(false)
   const copy = async () => {

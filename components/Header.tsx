@@ -1,15 +1,12 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
-import { Film, Search } from 'lucide-react'
-import { useState } from 'react'
+import { usePathname } from 'next/navigation'
+import { Film } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 export default function Header() {
   const pathname = usePathname()
-  const router = useRouter()
-  const [q, setQ] = useState('')
 
   const nav = (href: string, label: string) => (
     <Link href={href} className={cn('text-sm font-medium hover:text-indigo-700', pathname === href && 'text-indigo-700')}>
@@ -37,25 +34,6 @@ export default function Header() {
           </div>
 
           <div className="ml-auto flex items-center gap-2">
-            <form
-              className="hidden sm:block"
-              onSubmit={(e) => {
-                e.preventDefault()
-                const term = q.trim()
-                if (term) router.push(`/search?q=${encodeURIComponent(term)}`)
-              }}
-            >
-              <div className="relative">
-                <input
-                  value={q}
-                  onChange={(e) => setQ(e.target.value)}
-                  placeholder="Search movies…"
-                  className="w-[320px] rounded-full border border-white/40 bg-white/70 px-10 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
-                />
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
-              </div>
-            </form>
-
             <Link className="btn-primary" href="/search">Browse</Link>
           </div>
         </div>

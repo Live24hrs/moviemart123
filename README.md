@@ -2,7 +2,7 @@
 
 A movie discovery + request storefront with an AI bargaining chatbot.
 
-## 1) Setup
+## 1) Setup-
 1. Install Node.js (18+ recommended)
 2. In this folder:
    ```bash
